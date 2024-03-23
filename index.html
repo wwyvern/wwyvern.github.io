@@ -5,22 +5,32 @@
     <meta name="viewport" content="user-scalable=no, width=device-width, maximum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <style>
-        body {
-            font-family: Arial, sans-serif;
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+        #video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            object-fit: cover;
         }
         .container {
+            position: relative;
+            z-index: 1;
             width: 50%;
             margin: 0 auto;
-            background-color: rgba(255, 255, 255, 0.5);
             padding: 20px;
             border-radius: 10px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+            box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.2);
+            color: white;
         }
         h2 {
             text-align: center;
-        }
-        .settings {
-            margin-bottom: 20px;
         }
         .result {
             margin-bottom: 20px;
@@ -29,33 +39,25 @@
             width: 150px;
             margin: 0 auto;
             display: block;
-            background-color: #4CAF50;
-            color: white;
+            background-color: #FFD700; /* Gold color */
+            color: black; /* Black text for contrast */
             padding: 10px 20px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
         }
         button:hover {
-            background-color: #45a049;
+            background-color: #FFA500; /* Darker shade of gold on hover */
         }
     </style>
 </head>
 <body>
-    <h2>Projek Speed test</h2>
+    <video autoplay muted loop id="video-background">
+        <source src="134Z_stcktunnelmotionscyan.mp4" type="video/mp4">
+        Your browser does not support HTML5 video.
+    </video>
     <div class="container">
-        <div class="settings">
-            <h3>--------------- Settings ---------------</h3>
-            <form>
-                Faster Test<input type="range" id="sustainTime" min="1" max="8" value="4"> More Accurate Test<br /><br />
-                <input type="checkbox" id="testServerEnabled" checked="checked">Find Test Server<br />
-                <input type="checkbox" id="userInfoEnabled" checked="checked">Find User Info<br />
-                <input type="checkbox" id="latencyTestEnabled" checked="checked">Do Latency Test<br />
-                <input type="checkbox" id="uploadTestEnabled" checked="checked">Do Upload Test<br />
-                <input type="checkbox" id="progress.enabled" checked="checked">Show Progress<br />
-                <input type="checkbox" id="progress.verbose" checked="checked">Verbose Progress<br />
-            </form>
-        </div>
+        <h2>Projek Speed test</h2>
         <div id="prgs" class="result"></div>
         <div id="msg" class="result"></div>
         <button id="btnStart" type="button" onclick="btnStartClick()">Start Test</button>
@@ -74,14 +76,6 @@
         var prgsDiv = document.getElementById("prgs");
 
         function btnStartClick() {
-            SomApi.config.sustainTime = document.getElementById("sustainTime").value;
-            SomApi.config.testServerEnabled = document.getElementById("testServerEnabled").checked;
-            SomApi.config.userInfoEnabled = document.getElementById("userInfoEnabled").checked;
-            SomApi.config.latencyTestEnabled = document.getElementById("latencyTestEnabled").checked;
-            SomApi.config.uploadTestEnabled = document.getElementById("uploadTestEnabled").checked;
-            SomApi.config.progress.enabled = document.getElementById("progress.enabled").checked;
-            SomApi.config.progress.verbose = document.getElementById("progress.verbose").checked;
-
             msgDiv.innerHTML = "<h3>--------------- Test Result ---------------</h3><h4>" +
                 "Speed test in progress. Please wait...</h4>";
             SomApi.startTest();
